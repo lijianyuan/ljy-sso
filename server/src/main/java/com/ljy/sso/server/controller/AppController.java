@@ -1,15 +1,20 @@
 package com.ljy.sso.server.controller;
 
+import annotation.PassToken;
 import annotation.UserLoginToken;
 import com.alibaba.fastjson.JSONObject;
+import com.ljy.sso.server.dto.UserDto;
+import com.ljy.sso.server.service.LoginService;
 import entity.SsoUser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import store.SsoLoginStore;
 import store.SsoSessionIdHelper;
 import store.SsoTokenLoginHelper;
 import util.ReturnT;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @Description: login 认证 sso api
@@ -18,97 +23,59 @@ import util.ReturnT;
  * @email 15810874514@163.com
  */
 @Controller
+@RestController
 @RequestMapping("/api")
 public class AppController {
 
 
-    /**
-     * Login
-     * @param name
-     * @return
-     */
-    @RequestMapping("/login")
-    @ResponseBody
+
+    @Autowired
+    private LoginService loginService;
+
+
+    @PassToken
+    @PostMapping("/register")
+    public ReturnT register(@RequestBody UserDto registerDTO) {
+        return loginService.register(registerDTO);
+    }
+
+
+    @PassToken
+    @PostMapping("/login")
+    public ReturnT login(@RequestBody UserDto loginDTO) {
+        return loginService.login(loginDTO);
+    }
+
+    @PassToken
+    @PostMapping("/forgetPwdSubmit")
+    public ReturnT forgetPwdSubmit(@RequestBody UserDto resetPasswordDTO) {
+        return loginService.forgetPwdSubmit(resetPasswordDTO);
+    }
+
+
+    @PassToken
+    @PostMapping("/resetPwdSubmit")
+    public ReturnT resetPwdSubmit(@RequestBody UserDto resetPasswordDTO) {
+        return loginService.resetPwdSubmit(resetPasswordDTO);
+    }
+
     @UserLoginToken
-    public ReturnT<String> login(String  name , String mobile , String password , String userInfo , String unique ) {
-        // 1、make sso user
-        SsoUser u = new SsoUser();
-        u.setName(name);
-        u.setMobile(mobile);
-        u.setPassword(password);
-        u.setUserInfo(userInfo);
-        u.setExpireMinute(SsoLoginStore.getRedisExpireMinute());
-        u.setExpireFreshTime(System.currentTimeMillis());
-        u.setUnique(unique);
-        String sessionId = SsoSessionIdHelper.makeTokenId(u.getMobile(),u.getPassword());
-        SsoTokenLoginHelper.login(sessionId, u);
-        return new ReturnT<String>(sessionId);
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    public ReturnT logout(String sessionId) {
+        return loginService.ssoLogout( sessionId);
+    }
+
+    @RequestMapping("/loginCheck")
+    @ResponseBody
+    public ReturnT<SsoUser> loginCheck(String sessionId,String unique) {
+        return loginService.loginCheck(sessionId,unique);
     }
 
 
-    /**
-     * Logout
-     *
-     * @param sessionId
-     * @return
-     */
-    @RequestMapping("/logout")
+    @RequestMapping("/getUser")
     @ResponseBody
-    public ReturnT<String> logout(String sessionId) {
-        // logout, remove storeKey
-        SsoTokenLoginHelper.logout(sessionId);
-        return ReturnT.SUCCESS;
-    }
-
-    /**
-     * logincheck
-     *
-     * @param sessionId
-     * @return
-     */
-    @RequestMapping("/logincheck")
-    @ResponseBody
-    public ReturnT<SsoUser> logincheck(String sessionId,String unique) {
-        // logout
-        SsoUser ssoUser = SsoTokenLoginHelper.loginCheck(sessionId,unique);
-        if (ssoUser == null) {
-            return new ReturnT<SsoUser>(ReturnT.FAIL_CODE, "sso not login.");
-        }
-        return new ReturnT<SsoUser>(ssoUser);
-    }
-
-
-
-    /**
-     * Login
-     * @param
-     * @return
-     */
-    @RequestMapping("/updateUserInfo")
-    @ResponseBody
-    public ReturnT<String> updateUserInfo(String userInfo , String sessionId) {
-        // 1、make sso user
-        SsoUser u =SsoTokenLoginHelper.getUser(sessionId);
-        String newMobile = JSONObject.parseObject(userInfo).getString("mobile");
-        String mobile = JSONObject.parseObject(u.getUserInfo()).getString("mobile");
-        String newPassword = JSONObject.parseObject(userInfo).getString("password");
-        String password = JSONObject.parseObject(u.getUserInfo()).getString("password");
-        u.setUserInfo(userInfo);
-        u.setExpireMinute(SsoLoginStore.getRedisExpireMinute());
-        u.setExpireFreshTime(System.currentTimeMillis());
-
-        if (!newMobile.equals(mobile)||!newPassword.equals(password))
-        {
-            String sessionId1 = SsoSessionIdHelper.makeTokenId(newMobile,newPassword);
-            u.setMobile(newMobile);
-            u.setPassword(newPassword);
-            SsoTokenLoginHelper.login(sessionId1, u);
-            return new ReturnT<String>(sessionId1);
-        }else
-        {
-            SsoTokenLoginHelper.login(sessionId, u);
-            return new ReturnT<String>("");
-        }
+    public ReturnT<SsoUser> getUser(String sessionId,String unique) {
+        return loginService.loginCheck(sessionId,unique);
     }
 
 
