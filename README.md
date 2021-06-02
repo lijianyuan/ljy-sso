@@ -3,7 +3,7 @@
 ## java sso 单点登录系统 支持分布式  
 
 ## 集成步骤
-## 1、客户端集成  SsoAuthenticationInterceptor拦截器实现登录拦截
+## 1、客户端集成  SsoAuthenticationInterceptor拦截器实现登录拦截 测试的InterceptorConfig 
 ## 2、拦截器通过   PassToken      UserLoginToken 注释方式实现登录和不登陆的拦截
            // 2，检查是否有passtoken注释，有则跳过认证
           if (method.isAnnotationPresent(PassToken.class)) {
@@ -84,13 +84,13 @@
             <version>RELEASE</version>
         </dependency>
         <!-- SSO 需要的jar   -->
-        
+
 #测试代码 
 
     https://github.com/lijianyuan/ljy-sso/blob/main/demo001/src/main/java/com/example/demo001/controller/http/user.http
     https://github.com/lijianyuan/ljy-sso/blob/main/demo002/src/main/java/com/example/demo002/controller/http/user.http
     
-    
+###  集成SsoConfig 类型加载启动参数
 #### 核心配置  application.properties 中配置 4个都要配置没用的可以为空
     ### sso
     sso.redis.address=redis://127.0.0.1:6379 服务端必须配置值 客户端可以不填写值
