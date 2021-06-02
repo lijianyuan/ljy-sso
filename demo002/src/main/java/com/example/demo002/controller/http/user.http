@@ -1,0 +1,64 @@
+##### 测试使用
+POST http://127.0.0.1:8081/sso-demo001/api/test
+Accept: application/json
+Content-Type: application/json
+sso_tokenid: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJtb2JpbGUiOiIxNTgxMDg3NDUxNCIsImV4cCI6MTYyMzgwMjE5M30.noWsG0_ZobEmSns2AX0dXMzjyt8elC5ygrkLZfctjuk
+###
+
+
+
+
+
+##### 测试使用  注册
+POST http://localhost:8080/sso-server/api/register
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name":"name",
+  "nickname":"nickname",
+  "mobile":"15810874514",
+  "password":"123456",
+  "unique":"127.0.0.1"
+}
+###
+##### 测试使用 登录
+POST http://127.0.0.1:8080/sso-server/api/login
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name":"name",
+  "nickname":"nickname",
+  "mobile":"15810874514",
+  "password":"123456",
+  "unique":"127.0.0.1"
+}
+###
+##### 测试使用 登录检查
+POST http://127.0.0.1:8080/sso-server/api/login
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name":"name",
+  "nickname":"nickname",
+  "mobile":"15810874514",
+  "password":"123456",
+  "unique":"127.0.0.1"
+}
+###
+
+
+##### 测试使用 登录检查
+POST http://127.0.0.1:8080/sso-server/api/loginCheck?sessionId=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJtb2JpbGUiOiIxNTgxMDg3NDUxNCIsImV4cCI6MTYyMzgwMjE5M30.noWsG0_ZobEmSns2AX0dXMzjyt8elC5ygrkLZfctjuk&unique=127.0.0.1
+
+###
+
+
+
+##### 测试使用 获取用户信息
+POST http://127.0.0.1:8080/sso-server/api/getUser?sessionId=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJtb2JpbGUiOiIxNTgxMDg3NDUxNCIsImV4cCI6MTYyMzgwMjE5M30.noWsG0_ZobEmSns2AX0dXMzjyt8elC5ygrkLZfctjuk&unique=127.0.0.1
+
+###
+
