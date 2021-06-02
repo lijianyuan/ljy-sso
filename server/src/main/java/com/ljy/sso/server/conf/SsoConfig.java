@@ -1,4 +1,4 @@
-package config;
+package com.ljy.sso.server.conf;
 
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;

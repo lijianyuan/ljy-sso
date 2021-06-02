@@ -1,0 +1,15 @@
+##### 老师认证相关接口  添加
+POST http://localhost:8080/sso-server/api/login?name=11&mobile=15810874514&password=1234&userInfo=userInfo&unique=unique
+Accept: application/json
+Content-Type: application/json
+
+{
+
+  "name": "https://www.baidu.com11111111111111",
+  "mobile": 0,
+  "password": "java教师",
+  "userInfo": "lijianyuan",
+  "unique": "java教师"
+}
+
+###

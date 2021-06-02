@@ -1,5 +1,6 @@
 package entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -9,8 +10,8 @@ import java.util.Date;
  * @email 15810874514@163.com
  */
 
-public class SsoUser {
-
+public class SsoUser implements Serializable {
+    private static final long serialVersionUID = 123456789L;
     private Integer id;
     private String name;
     private String nickname;

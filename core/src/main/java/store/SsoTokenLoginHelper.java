@@ -50,8 +50,8 @@ public class SsoTokenLoginHelper {
     }
 
     /*
-     *@Description: SsoTokenLoginHelper.loginCheck 检查用户是否登录
-     *@Param: 
+     *@Description: SsoTokenLoginHelper.loginCheck 检查用户是否登录 单纯的根据tokenid 验证
+     *@Param: sessionId:tokenId  unique:客户端设备唯一标识 unique
      *@return: 
      *@Author: ljy
      *@Date: 2021/6/2 11:01
@@ -59,7 +59,7 @@ public class SsoTokenLoginHelper {
      *
      **/
 
-    public static Object loginCheck(String  sessionId , String unique ){
+    public static SsoUser loginCheck(String  sessionId , String unique ){
 
         String storeKey = SsoSessionIdHelper.parseStoreKey(sessionId);
         if (storeKey == null) {
@@ -95,7 +95,7 @@ public class SsoTokenLoginHelper {
      *
      **/
 
-    public static Object getUser(String  sessionId  ){
+    public static SsoUser getUser(String  sessionId  ){
 
         String storeKey = SsoSessionIdHelper.parseStoreKey(sessionId);
         if (storeKey == null) {
@@ -117,7 +117,7 @@ public class SsoTokenLoginHelper {
 
     public static void update(String mobile,String clientAddress ) {
 
-        Map<String, String> loginParam = new HashMap<>();
+        Map<String, String> loginParam = new HashMap<String, String>();
         loginParam.put("mobile", mobile);
         String  [] clientAddresss = clientAddress.split(";");
         for (String addr:clientAddresss
