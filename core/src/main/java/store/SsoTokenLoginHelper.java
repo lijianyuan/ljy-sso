@@ -59,7 +59,7 @@ public class SsoTokenLoginHelper {
      *
      **/
 
-    public static SsoUser loginCheck(String  sessionId , String unique ){
+    public static SsoUser loginCheck(String  sessionId , String unique , String  password ){
 
         String storeKey = SsoSessionIdHelper.parseStoreKey(sessionId);
         if (storeKey == null) {
@@ -73,9 +73,13 @@ public class SsoTokenLoginHelper {
                 SsoLoginStore.put(storeKey, ssoUser);
             }
             // 验证 token MD5SSOUtil.MD5()
-            JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(ssoUser.getPassword().trim())).build();
+            JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(password.trim())).build();
             try {
                 jwtVerifier.verify(sessionId);
+                if(!unique.equals(ssoUser.getUnique()))
+                    return null;
+                else
+                    return ssoUser;
             } catch (JWTVerificationException e) {
                 e.printStackTrace();
                 return null;
