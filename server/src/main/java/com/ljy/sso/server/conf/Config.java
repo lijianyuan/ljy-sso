@@ -1,7 +1,6 @@
 package com.ljy.sso.server.conf;
 
-import org.springframework.beans.factory.DisposableBean;
-import org.springframework.beans.factory.InitializingBean;
+import config.SsoConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import store.SsoLoginStore;
@@ -14,7 +13,7 @@ import util.JedisUtil;
  * @email 15810874514@163.com
  */
 @Configuration
-public class SsoConfig implements InitializingBean, DisposableBean {
+public class Config extends SsoConfig {
     @Value("${sso.redis.address}")
     private String redisAddress;
 
@@ -31,7 +30,7 @@ public class SsoConfig implements InitializingBean, DisposableBean {
      **/
     @Override
     public void destroy() throws Exception {
-        JedisUtil.close();
+        super.destroy();
     }
 
     /*
@@ -46,8 +45,7 @@ public class SsoConfig implements InitializingBean, DisposableBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        SsoLoginStore.setRedisExpireMinute(redisExpireMinute);
-        JedisUtil.initDefault(redisAddress);
+        super.afterPropertiesSet();
     }
 }
 
