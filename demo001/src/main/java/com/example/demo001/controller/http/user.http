@@ -1,0 +1,6 @@
+##### 老师认证相关接口  添加
+POST http://localhost:8081/sso-demo002/api/test
+Accept: application/json
+Content-Type: application/json
+sso_tokenid: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJtb2JpbGUiOiIxNTgxMDg3NDUxNCIsImV4cCI6MTYyMzc5NDQwMn0.vIqUkLNbqkpNNxEuVOvphmRTzGvtSC3oCE0LIh5g9Yk
+###
