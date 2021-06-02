@@ -13,3 +13,18 @@ Content-Type: application/json
 }
 
 ###
+
+
+##### 测试使用
+POST http://127.0.0.1:8080/sso-server/api/login
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name":"name",
+  "nickname":"nickname",
+  "mobile":"15810874514",
+  "password":"123456",
+  "unique":"127.0.0.1"
+}
+###
