@@ -53,7 +53,7 @@ public class SsoUtils<T>   {
     public static Boolean loginCheck(String tokenId ,String unique ) throws IOException {
         long startMilliSecond = LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli();
         // logout url
-        String logincheckUrl = ssoServer + "app/loginCheck";
+        String logincheckUrl = ssoServer + "api/loginCheck";
         // logout param
         Map<String, String> logincheckParam = new HashMap<>();
         logincheckParam.put("sessionId", tokenId);
@@ -104,7 +104,7 @@ public class SsoUtils<T>   {
     public  T getUser(String tokenId ,String unique ,Class<T> clazz) throws IOException {
         long startMilliSecond = LocalDateTime.now().toInstant(ZoneOffset.of("+8")).toEpochMilli();
         // logout url
-        String logincheckUrl = ssoServer + "app/getUser";
+        String logincheckUrl = ssoServer + "api/getUser";
         // logout param
         Map<String, String> getUserParam = new HashMap<>();
         getUserParam.put("sessionId", tokenId);
@@ -141,6 +141,9 @@ public class SsoUtils<T>   {
         }
         return null;
     }
+
+
+
 
 
 }
