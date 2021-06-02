@@ -14,11 +14,7 @@ import util.JedisUtil;
  */
 @Configuration
 public class Config extends SsoConfig {
-    @Value("${sso.redis.address}")
-    private String redisAddress;
 
-    @Value("${sso.redis.expire.minute}")
-    private int redisExpireMinute;
     /*
      *@Description: SsoConfig.destroy 注销方法
      *@Param: 
