@@ -86,4 +86,15 @@
         <!-- SSO 需要的jar   -->
         
 #测试代码 
-        
+
+    https://github.com/lijianyuan/ljy-sso/blob/main/demo001/src/main/java/com/example/demo001/controller/http/user.http
+    https://github.com/lijianyuan/ljy-sso/blob/main/demo002/src/main/java/com/example/demo002/controller/http/user.http
+    
+    
+#### 核心配置  application.properties 中配置 4个都要配置没用的可以为空
+    ### sso
+    sso.redis.address=redis://127.0.0.1:6379 服务端必须配置值 客户端可以不填写值
+    sso.redis.expire.minute=1440 redis 过期时间
+    sso.server=http://localhost:8080/sso-server/  单点登录地址 服务端不需要填写 服务端可以不填写值
+    sso.type=1 服务端客户端类型区别  1服务端2客户端
+##### 如果有疑问可以加微信  yuanyuanhhhjjj
