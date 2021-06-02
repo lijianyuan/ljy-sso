@@ -21,6 +21,15 @@ public class Conf {
 
 
 
+
+    /**
+     *  我是服务端
+     */
+    public static final String SSO_SERVER= "1";
+    /**
+     *  我是客户端
+     */
+    public static final String SSO_ClIENT= "2";
 }
 
     
