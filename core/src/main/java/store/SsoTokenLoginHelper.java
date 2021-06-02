@@ -59,7 +59,7 @@ public class SsoTokenLoginHelper {
      *
      **/
 
-    public static Object loginCheck(String  sessionId , String  userName,String unique ){
+    public static Object loginCheck(String  sessionId , String unique ){
 
         String storeKey = SsoSessionIdHelper.parseStoreKey(sessionId);
         if (storeKey == null) {
@@ -68,7 +68,7 @@ public class SsoTokenLoginHelper {
         SsoUser ssoUser = SsoLoginStore.get(storeKey);
         if (ssoUser != null) {
             // After the expiration time has passed half, Auto refresh
-            if ((System.currentTimeMillis() - ssoUser.getExpireFreshTime()) > ssoUser.getExpireMinute()/2) {
+            if ((System.currentTimeMillis() - ssoUser.getExpireFreshTime()) > ssoUser.getExpireMinute()/5) {
                 ssoUser.setExpireFreshTime(System.currentTimeMillis());
                 SsoLoginStore.put(storeKey, ssoUser);
             }
@@ -76,8 +76,6 @@ public class SsoTokenLoginHelper {
             JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(ssoUser.getPassword().trim())).build();
             try {
                 jwtVerifier.verify(sessionId);
-                if(userName.equals(ssoUser.getName())&& unique.equals(ssoUser.getUnique()))
-                    return ssoUser;
             } catch (JWTVerificationException e) {
                 e.printStackTrace();
                 return null;
@@ -112,7 +110,7 @@ public class SsoTokenLoginHelper {
      *@Param: 
      *@return: 
      *@Author: ljy
-     *@Date: 2021/6/2 11:02
+     *@Date: 2021/6/2 11:04
      *@email: 15810874514@163.com
      *
      **/
