@@ -13,7 +13,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @date: 2021年06月02日 13:29
  * @email 15810874514@163.com
  */
-//@Configuration
+//  @Configuration
 public class IntConfig extends InterceptorConfig {
     /**
      * 拦截所有包含api路径（不限深度）的请求，但还需要通过判断是否有 @LoginRequired 注解 决定是否需要登录
@@ -23,7 +23,7 @@ public class IntConfig extends InterceptorConfig {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        //super.addInterceptors(registry);
+        super.addInterceptors(registry);
        // registry.addInterceptor(authenticationInterceptor()).addPathPatterns("/**/api/**","/**/META-INF/**");
     }
    /* @Bean
@@ -33,9 +33,9 @@ public class IntConfig extends InterceptorConfig {
 
     @Bean
     public SsoAuthenticationInterceptor authenticationInterceptor() {
-     // return   super.authenticationInterceptor();
+      return   super.authenticationInterceptor();
       //  return new SsoAuthenticationInterceptor();
-        return null;
+      //  return null;
     }
 }
 
