@@ -2,6 +2,7 @@ package intercepter;
 
 import annotation.PassToken;
 import annotation.UserLoginToken;
+import entity.SsoUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import store.SsoTokenLoginHelper;
 import util.Conf;
 import util.IPUtil;
 import util.ResponseMsg;
+import util.SsoUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -63,7 +65,11 @@ public class SsoAuthenticationInterceptor implements HandlerInterceptor {
                 if (token == null || token.equals("")) {
                     throw new RuntimeException(ResponseMsg.TOKEN_NOT_EXIST_CODE);
                 }
-                Object ssoCacheUserInfo = SsoTokenLoginHelper.loginCheck(token, IPUtil.getIpAddr(httpServletRequest));
+                Object ssoCacheUserInfo = SsoUtils.loginCheck(token, IPUtil.getIpAddr(httpServletRequest));
+              /*
+                获取用户信息
+                SsoUtils<SsoUser> ssoUtils = new SsoUtils<SsoUser>();
+                SsoUser ssoUser = ssoUtils.getUser(token, IPUtil.getIpAddr(httpServletRequest),SsoUser.class);*/
                 logger.info("loginCheck===>{}", ssoCacheUserInfo);
                 if (ssoCacheUserInfo ==null  ) {
                     throw new RuntimeException(ResponseMsg.TOKEN_NOT_EXIST_CODE);
