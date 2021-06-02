@@ -5,7 +5,9 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import store.SsoLoginStore;
+import util.Conf;
 import util.JedisUtil;
+import util.SsoUtils;
 
 /**
  * @Description: 配置文件
@@ -13,13 +15,18 @@ import util.JedisUtil;
  * @date: 2021年06月01日 18:10
  * @email 15810874514@163.com
  */
-@Configuration
-public class SsoConfig implements InitializingBean, DisposableBean {
+public class SsoConfig  implements InitializingBean, DisposableBean{
+
     @Value("${sso.redis.address}")
     private String redisAddress;
-
     @Value("${sso.redis.expire.minute}")
     private int redisExpireMinute;
+    @Value("${sso.server}")
+    private  String ssoServer;
+    @Value("${sso.type}")
+    private  String type;
+
+
     /*
      *@Description: SsoConfig.destroy 注销方法
      *@Param: 
@@ -46,8 +53,14 @@ public class SsoConfig implements InitializingBean, DisposableBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        SsoLoginStore.setRedisExpireMinute(redisExpireMinute);
-        JedisUtil.initDefault(redisAddress);
+        if (Conf.SSO_SERVER.equals(type))
+        {
+            SsoLoginStore.setRedisExpireMinute(redisExpireMinute);
+            JedisUtil.initDefault(redisAddress);
+        }else if (Conf.SSO_ClIENT.equals(type))
+        {
+            SsoUtils.initDefault(ssoServer);
+        }
     }
 }
 
