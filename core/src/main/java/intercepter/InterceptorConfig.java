@@ -14,7 +14,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  *
  * 此方法是默认的拦截器 ， 客户端可根据自己需求自行编写
  */
-@Configuration
+
 public class InterceptorConfig implements WebMvcConfigurer {
     /**
      * 拦截所有包含api路径（不限深度）的请求，但还需要通过判断是否有 @LoginRequired 注解 决定是否需要登录
